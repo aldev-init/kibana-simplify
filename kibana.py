@@ -14,6 +14,10 @@ describe_pod = os.environ.get("describe_pods_command").replace("<>",kubeconfig)
 logs_pods = os.environ.get("logs_pods_command").replace("<>",kubeconfig)
 delete_pods = os.environ.get("delete_pods_command").replace("<>",kubeconfig)
 
+#code configuration
+prompt="input service name: "
+parameter=":param"
+
 
 class Behaviour:
     # create menu
@@ -24,7 +28,6 @@ class Behaviour:
         for i in menu:
             print([index],i)
             index+=1
-        pass
         
     
 # clear cli
@@ -39,14 +42,14 @@ if(key == "1"):
 if(key == "2"):
     os.system("cls")
     os.system(get_pods)
-    service_name = input("input service name: ")
-    describe_pods_with_param = describe_pod.replace(":param",service_name)
+    service_name = input(prompt)
+    describe_pods_with_param = describe_pod.replace(parameter,service_name)
     os.system(describe_pods_with_param)
 if(key == "3"):
     os.system("cls")
     os.system(get_pods)
-    service_name = input("input service name: ")
-    logs_pods_with_param = logs_pods.replace(":param",service_name)
+    service_name = input(prompt)
+    logs_pods_with_param = logs_pods.replace(parameter,service_name)
     arg = input("Live Logs?(y/n)")
     if(arg == "y"):
         live_logs = logs_pods_with_param.replace(":arg","-f")
@@ -57,8 +60,8 @@ if(key == "3"):
 if(key == "4"):
     os.system("cls")
     os.system(get_pods)
-    service_name = input("input service name: ")
-    delete_pods_with_param = delete_pods.replace(":param",service_name)
+    service_name = input(prompt)
+    delete_pods_with_param = delete_pods.replace(parameter,service_name)
     os.system(delete_pods_with_param)
 
 #cooming soon improvement
@@ -75,8 +78,8 @@ if(key == "4"):
     #         os.system("cls")
     #         os.system(get_pods)
     #         keyboard.clear_all_hotkeys
-    #         service_name = input("input service name: ").replace("2","")
-    #         describe_pods_with_param = describe_pods.replace(":param",service_name)
+    #         service_name = input(prompt).replace("2","")
+    #         describe_pods_with_param = describe_pods.replace(parameter,service_name)
     #         os.system(describe_pods_with_param)
     #     if(key == "backspace"):
     #         keyboard.press('esc')
