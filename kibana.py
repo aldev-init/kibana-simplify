@@ -4,9 +4,31 @@ from dotenv import load_dotenv
 # load .env file
 load_dotenv()
 
-# load user directory
+# # load user directory
 user_path = os.environ.get("kibana_path")
-kubeconfig = os.environ.get("kubeconfig_name")
+file_list_config = os.environ.get("list_kube_config")
+
+print(file_list_config)
+
+# setting kube config
+index_config = 0
+print("Silahkan pilih kubectl config: ")
+with open(file_list_config) as file:
+    lines = file.readlines()
+lines = [line.strip() for line in lines]
+for list_config in lines:
+    print([index_config],list_config)
+    index_config+=1
+
+default_config = lines[3]
+print("Config default saat ini: "+default_config)
+
+config = input("pilih config (tekan enter untuk default): ")
+
+if(config == ""):
+    kubeconfig = "%USERPROFILE%\Project\Kube-Database-dev"+default_config
+else:
+    kubeconfig = "%USERPROFILE%\Project\Kube-Database-dev"+lines[int(config)]
 
 # command 
 get_pods = os.environ.get("get_pods_command").replace("<>",kubeconfig)
