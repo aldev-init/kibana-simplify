@@ -13,9 +13,9 @@ print(file_list_config)
 # setting kube config
 index_config = 0
 print("Silahkan pilih kubectl config: ")
-with open(file_list_config) as file:
-    lines = file.readlines()
-lines = [line.strip() for line in lines]
+path = os.environ.get("USERPROFILE") + "\Project\Kube-Database-dev"
+list_dir = os.listdir(path)
+lines = [line.strip() for line in list_dir if os.path.isfile(os.path.join(path,line))]
 for list_config in lines:
     print([index_config],list_config)
     index_config+=1
@@ -26,9 +26,9 @@ print("Config default saat ini: "+default_config)
 config = input("pilih config (tekan enter untuk default): ")
 
 if(config == ""):
-    kubeconfig = "%USERPROFILE%\Project\Kube-Database-dev"+default_config
+    kubeconfig = "%USERPROFILE%\Project\Kube-Database-dev\\"+default_config
 else:
-    kubeconfig = "%USERPROFILE%\Project\Kube-Database-dev"+lines[int(config)]
+    kubeconfig = "%USERPROFILE%\Project\Kube-Database-dev\\"+lines[int(config)]
 
 # command 
 get_pods = os.environ.get("get_pods_command").replace("<>",kubeconfig)
