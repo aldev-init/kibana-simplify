@@ -96,10 +96,8 @@ if(key == "5"):
     os.system(port_forward_with_param_and_port)
 if(key == "6"):
     os.system("cls")
-    os.system(get_pods)
-    service_name = input(prompt)
     refresh_time = input("Masukan waktu refresh (enter for default 5s): ")
-    ram_usage_pods_with_param = ram_usage_pods.replace(parameter,service_name)
+    ram_usage_pods_with_param = ram_usage_pods
     while True:
         os.system("cls")
         os.system(ram_usage_pods_with_param)
