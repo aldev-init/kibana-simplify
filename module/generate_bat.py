@@ -1,5 +1,12 @@
+from dotenv import load_dotenv
+import os
+
 def generate(pyName,name):
-    bat_content = pyName + " %CD%/kubectl.py"
+    
+    load_dotenv()
+    
+    bat_content = pyName +" "+ str(os.environ.get("KUBECTL_PY_PATH")) + "\kubectl.py"
+    print(bat_content)
 
     with open(name+".bat",'w') as f:
         f.write(bat_content)
