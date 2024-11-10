@@ -1,41 +1,41 @@
 import os
 from dotenv import load_dotenv
+import time
+import random
 
 # load .env file
 load_dotenv()
-
-# # load user directory
-user_path = os.environ.get("kibana_path")
-file_list_config = os.environ.get("list_kube_config")
-
-print(file_list_config)
+kubectl_path = os.environ.get("KUBECTL_PATH")
 
 # setting kube config
 index_config = 0
 print("Silahkan pilih kubectl config: ")
-path = os.environ.get("USERPROFILE") + "\Project\Kube-Database-dev"
+path = os.environ.get("KUBECONFIG_PATH")
 list_dir = os.listdir(path)
 lines = [line.strip() for line in list_dir if os.path.isfile(os.path.join(path,line))]
 for list_config in lines:
     print([index_config],list_config)
     index_config+=1
 
-default_config = lines[5]
+default_config = random.choice(lines)
 print("Config default saat ini: "+default_config)
 
 config = input("pilih config (tekan enter untuk default): ")
 
 if(config == ""):
-    kubeconfig = "%USERPROFILE%\Project\Kube-Database-dev\\"+default_config
+    kubeconfig = path+"/"+default_config
+    print(kubeconfig)
 else:
-    kubeconfig = "%USERPROFILE%\Project\Kube-Database-dev\\"+lines[int(config)]
+    kubeconfig = path+"/"+lines[int(config)]
+    print(kubeconfig)
 
 # command 
-get_pods = os.environ.get("get_pods_command").replace("<>",kubeconfig)
+get_pods = os.environ.get("get_pods_command").replace("<>",kubeconfig).replace("kubectl",kubectl_path)
 describe_pod = os.environ.get("describe_pods_command").replace("<>",kubeconfig)
 logs_pods = os.environ.get("logs_pods_command").replace("<>",kubeconfig)
 delete_pods = os.environ.get("delete_pods_command").replace("<>",kubeconfig)
 port_forward = os.environ.get("port_forward_command").replace("<>",kubeconfig)
+ram_usage_pods = os.environ.get("ram_usage_pods_command").replace("<>",kubeconfig)
 
 #code configuration
 prompt="input service name: "
@@ -58,7 +58,7 @@ class Behaviour:
 os.system("cls")
 print("Welcome To Kibana Simplify Cli")
 print("Anda tidak perlu mengetikan command yang panjang lagi :)")
-bh = Behaviour('Get Pods','Describe Pod','Logs pod','Delete Pod','Port Forward')
+bh = Behaviour('Get Pods','Describe Pod','Logs pod','Delete Pod','Port Forward','Ram Usage Pod')
 key = input("Choose Menu (enter for exit): ")
 if(key == "1"):
     os.system("cls")
@@ -94,6 +94,16 @@ if(key == "5"):
     input_port = input("Masukan Port, Dipisahkan dengan spasi jika lebih dari 1: ")
     port_forward_with_param_and_port = port_forward.replace(parameter,service_name).replace(port,input_port)
     os.system(port_forward_with_param_and_port)
+if(key == "6"):
+    os.system("cls")
+    os.system(get_pods)
+    service_name = input(prompt)
+    refresh_time = input("Masukan waktu refresh (enter for default 5s): ")
+    ram_usage_pods_with_param = ram_usage_pods.replace(parameter,service_name)
+    while True:
+        os.system("cls")
+        os.system(ram_usage_pods_with_param)
+        time.sleep(int( 5 if refresh_time == "" else refresh_time))
 
 #cooming soon improvement
 # import keyboard
