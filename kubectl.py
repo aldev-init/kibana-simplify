@@ -31,11 +31,11 @@ else:
 
 # command 
 get_pods = os.environ.get("get_pods_command").replace("<>",kubeconfig).replace("kubectl",kubectl_path)
-describe_pod = os.environ.get("describe_pods_command").replace("<>",kubeconfig)
-logs_pods = os.environ.get("logs_pods_command").replace("<>",kubeconfig)
-delete_pods = os.environ.get("delete_pods_command").replace("<>",kubeconfig)
-port_forward = os.environ.get("port_forward_command").replace("<>",kubeconfig)
-ram_usage_pods = os.environ.get("ram_usage_pods_command").replace("<>",kubeconfig)
+describe_pod = os.environ.get("describe_pods_command").replace("<>",kubeconfig).replace("kubectl",kubectl_path)
+logs_pods = os.environ.get("logs_pods_command").replace("<>",kubeconfig).replace("kubectl",kubectl_path)
+delete_pods = os.environ.get("delete_pods_command").replace("<>",kubeconfig).replace("kubectl",kubectl_path)
+port_forward = os.environ.get("port_forward_command").replace("<>",kubeconfig).replace("kubectl",kubectl_path)
+ram_usage_pods = os.environ.get("ram_usage_pods_command").replace("<>",kubeconfig).replace("kubectl",kubectl_path)
 
 #code configuration
 prompt="input service name: "
